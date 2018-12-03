@@ -25,10 +25,13 @@ import org.glassfish.jersey.process.internal.RequestScoped;
 import org.glassfish.jersey.server.ApplicationHandler;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.server.spi.Container;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 public class JerseyRequestMapper extends AbstractMapper implements Container{
 	
+	private static final Logger LOG = LoggerFactory.getLogger(JerseyRequestMapper.class);
 
 	protected final String[] mountSegments;
 	
@@ -58,7 +61,7 @@ public class JerseyRequestMapper extends AbstractMapper implements Container{
 
 	@Override
 	public int getCompatibilityScore(Request request) {
-		return urlStartsWith(request.getUrl(), mountSegments)?mountSegments.length:0;
+		return urlStartsWith(request.getUrl(), mountSegments)?mountSegments.length:Integer.MIN_VALUE;
 	}
 
 	@Override

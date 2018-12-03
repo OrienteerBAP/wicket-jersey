@@ -14,6 +14,8 @@ import org.apache.wicket.authroles.authentication.AbstractAuthenticatedWebSessio
 import org.apache.wicket.protocol.http.WebSession;
 import org.apache.wicket.request.Request;
 import org.apache.wicket.request.Response;
+import org.apache.wicket.request.Url;
+import org.apache.wicket.request.Url.StringMode;
 import org.apache.wicket.request.IRequestCycle;
 import org.apache.wicket.request.IRequestHandler;
 import org.apache.wicket.request.http.WebRequest;
@@ -51,8 +53,17 @@ public class JerseyRequestHandler implements IRequestHandler {
 		final WicketResponseWriter responseWriter = new WicketResponseWriter(response, mapper.getScheduler());
         try {
         	LOG.debug(JerseyRequestHandler.class.getSimpleName()+" started");
-            URI baseUri = new URI(requestCycle.getUrlRenderer().getBaseUrl().toString());
-            URI requestUri = new URI(requestCycle.getUrlRenderer().renderFullUrl(request.getClientUrl()));
+        	LOG.info("Prefix: "+request.getPrefixToContextPath());
+        	
+        	Url base = Url.parse(request.getContextPath() + request.getFilterPath());
+            URI baseUri = new URI(requestCycle.getUrlRenderer().renderFullUrl(base));
+            
+            Url requestUrl = request.getClientUrl();
+            requestUrl.prependLeadingSegments(base.getSegments());
+            
+            URI requestUri = new URI(requestUrl.toString(StringMode.FULL));
+            
+            LOG.info("base: "+baseUri+"  request: "+requestUri);
             final ContainerRequest requestContext = new ContainerRequest(baseUri,
                     requestUri, httpRequest.getMethod(),
                     getSecurityContext(request), new WicketRequestPropertiesDelegate(request));
