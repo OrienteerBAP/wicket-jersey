@@ -11,10 +11,17 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.ws.rs.core.Application;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response.Status;
 
+import org.apache.wicket.protocol.http.WebApplication;
+import org.apache.wicket.request.IRequestHandler;
+import org.apache.wicket.request.RequestHandlerExecutor;
+import org.apache.wicket.request.cycle.RequestCycle;
+import org.apache.wicket.request.http.WebRequest;
 import org.apache.wicket.request.http.WebResponse;
+import org.glassfish.jersey.message.internal.NullOutputStream;
 import org.glassfish.jersey.server.ContainerException;
 import org.glassfish.jersey.server.ContainerResponse;
 import org.glassfish.jersey.server.spi.ContainerResponseWriter;
@@ -43,9 +50,14 @@ public class WicketResponseWriter implements ContainerResponseWriter {
 
         final int code = statusInfo.getStatusCode();
         
-        if(code / 100 == 2) {
+        if(code == HttpServletResponse.SC_NOT_FOUND) {
+        	fallbackToDefaultWicketHandler();
+        	return new NullOutputStream();
+        }
+        else if(code / 100 == 2) {
         	response.setStatus(code);
-        } else {
+        } 
+        else {
 	        String reason = statusInfo.getReasonPhrase() == null
 	                ? Status.fromStatusCode(code).getReasonPhrase()
 	                : statusInfo.getReasonPhrase();
@@ -65,6 +77,13 @@ public class WicketResponseWriter implements ContainerResponseWriter {
         }
 
         return response.getOutputStream();
+	}
+	
+	protected void fallbackToDefaultWicketHandler() {
+		RequestCycle rc = RequestCycle.get();
+		rc.setMetaData(JerseyRequestMapper.AVOID_JERSEY_MAPPING, true);
+		IRequestHandler defaultHandler = WebApplication.get().getRootRequestMapper().mapRequest(rc.getRequest());
+		rc.replaceAllRequestHandlers(defaultHandler);
 	}
 
 	@Override

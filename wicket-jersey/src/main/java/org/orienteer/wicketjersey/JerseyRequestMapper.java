@@ -13,10 +13,12 @@ import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
 import javax.ws.rs.core.GenericType;
 
+import org.apache.wicket.MetaDataKey;
 import org.apache.wicket.request.IRequestHandler;
 import org.apache.wicket.request.Request;
 import org.apache.wicket.request.Response;
 import org.apache.wicket.request.Url;
+import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.request.mapper.AbstractMapper;
 import org.apache.wicket.util.lang.Args;
 import org.glassfish.jersey.internal.inject.AbstractBinder;
@@ -31,6 +33,8 @@ import org.slf4j.LoggerFactory;
 
 
 public class JerseyRequestMapper extends AbstractMapper implements Container{
+	
+	public static final MetaDataKey<Boolean> AVOID_JERSEY_MAPPING = new MetaDataKey<Boolean>() {};
 	
 	private static final Logger LOG = LoggerFactory.getLogger(JerseyRequestMapper.class);
 
@@ -74,7 +78,8 @@ public class JerseyRequestMapper extends AbstractMapper implements Container{
 
 	@Override
 	public int getCompatibilityScore(Request request) {
-		return urlStartsWith(request.getUrl(), mountSegments)?mountSegments.length:Integer.MIN_VALUE;
+		Boolean avoidJersey = RequestCycle.get().getMetaData(AVOID_JERSEY_MAPPING);
+		return (avoidJersey==null || !avoidJersey) && urlStartsWith(request.getUrl(), mountSegments)?mountSegments.length:Integer.MIN_VALUE;
 	}
 
 	@Override

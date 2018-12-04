@@ -34,4 +34,10 @@ public class WicketJerseyMainTests {
     	response = tester.executeGET("./overapi/wicket/testme2");
     	assertTrue(response.contains("testme2"));
     }
+    
+    @Test
+    public void testFallbackToWicket() {
+    	tester.executeGET("./overapi/justpage");
+    	tester.assertRenderedPage(HomePage.class);
+    }
 }

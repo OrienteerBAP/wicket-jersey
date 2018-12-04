@@ -22,6 +22,7 @@ public class MockWebApplication extends WebApplication {
 		MockRestApplication restApp = new MockRestApplication();
 		mount(new JerseyRequestMapper(restApp));
 		mount(new JerseyRequestMapper("/overapi", restApp));
+		mountPage("/overapi/justpage", HomePage.class);
 	}
 
 }
