@@ -9,9 +9,8 @@ import org.apache.wicket.request.cycle.RequestCycle;
 
 @Produces("application/json")
 @Path("wicket")
-public class EchoUrlResource {
+public class TestWicketResource {
 
-	
 	@GET
 	@Path("cycle")
 	public String cycle() {

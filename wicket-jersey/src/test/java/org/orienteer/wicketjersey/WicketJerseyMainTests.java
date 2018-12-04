@@ -1,5 +1,7 @@
 package org.orienteer.wicketjersey;
 
+import static org.junit.Assert.assertTrue;
+
 import org.apache.wicket.util.tester.WicketTester;
 import org.junit.Before;
 import org.junit.Test;
@@ -12,11 +14,11 @@ public class WicketJerseyMainTests {
 	
 	private static final Logger LOG = LoggerFactory.getLogger(WicketJerseyMainTests.class);
 	
-    private WicketTester tester;
+    private RestWicketTester tester;
 
     @Before
     public void setUp(){
-            tester = new WicketTester(new MockWebApplication());
+            tester = new RestWicketTester(new MockWebApplication());
     }
     
     @Test
@@ -27,9 +29,7 @@ public class WicketJerseyMainTests {
     
     @Test
     public void testEchoRest() {
-    	tester.executeUrl("./api/wicket/cycle");
-    	System.out.println("Status: "+tester.getLastResponse().getStatus());
-    	System.out.println("Response: "+tester.getLastResponse().getDocument());
-    	LOG.info("Response: "+tester.getLastResponse().getDocument());
+    	String response = tester.executeGET("./api/wicket/testme");
+    	assertTrue(response.contains("testme"));
     }
 }

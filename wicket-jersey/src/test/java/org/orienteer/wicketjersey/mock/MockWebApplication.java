@@ -7,10 +7,10 @@ import org.orienteer.wicketjersey.JerseyRequestMapper;
 
 public class MockWebApplication extends WebApplication {
 	
-	public MockWebApplication() {
+	static {
 		BasicConfigurator.configure();
 	}
-
+	
 	@Override
 	public Class<? extends Page> getHomePage() {
 		return HomePage.class;

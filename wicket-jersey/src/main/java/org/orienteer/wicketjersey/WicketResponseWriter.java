@@ -11,6 +11,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response.Status;
 
 import org.apache.wicket.request.http.WebResponse;
@@ -55,6 +56,8 @@ public class WicketResponseWriter implements ContainerResponseWriter {
         if (contentLength != -1) {
             response.setContentLength(contentLength);
         }
+        MediaType mediaType = context.getMediaType();
+        if(mediaType!=null ) response.setContentType(mediaType.toString());
         for (final Map.Entry<String, List<String>> e : context.getStringHeaders().entrySet()) {
             for (final String value : e.getValue()) {
             	response.addHeader(e.getKey(), value);

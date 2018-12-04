@@ -50,8 +50,12 @@ public class JerseyRequestMapper extends AbstractMapper implements Container{
 		this.scheduler = new ScheduledThreadPoolExecutor(2);
 	}
 	
-	public ScheduledExecutorService getScheduler() {
+	ScheduledExecutorService getScheduler() {
 		return scheduler;
+	}
+	
+	String[] getMountSegments() {
+		return mountSegments;
 	}
 
 	@Override

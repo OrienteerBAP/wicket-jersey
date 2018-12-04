@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.security.Principal;
+import java.util.Arrays;
 import java.util.Enumeration;
 
 import javax.servlet.http.HttpServletRequest;
@@ -55,17 +56,20 @@ public class JerseyRequestHandler implements IRequestHandler {
         	LOG.debug(JerseyRequestHandler.class.getSimpleName()+" started");
         	LOG.info("Prefix: "+request.getPrefixToContextPath());
         	
-        	Url base = Url.parse(request.getContextPath() + request.getFilterPath());
+        	Url root = Url.parse(request.getContextPath() + request.getFilterPath());
+        	Url base = new Url(root);
+        	base.getSegments().addAll(Arrays.asList(mapper.getMountSegments()));
+        	base.getSegments().add("");
             URI baseUri = new URI(requestCycle.getUrlRenderer().renderFullUrl(base));
             
             Url requestUrl = request.getClientUrl();
-            requestUrl.prependLeadingSegments(base.getSegments());
+            requestUrl.prependLeadingSegments(root.getSegments());
             
             URI requestUri = new URI(requestUrl.toString(StringMode.FULL));
             
             LOG.info("base: "+baseUri+"  request: "+requestUri);
             final ContainerRequest requestContext = new ContainerRequest(baseUri,
-                    requestUri, httpRequest.getMethod(),
+                    requestUri, httpRequest.getMethod().toUpperCase(),
                     getSecurityContext(request), new WicketRequestPropertiesDelegate(request));
             requestContext.setEntityStream(httpRequest.getInputStream());
             Enumeration<String> headers = httpRequest.getHeaderNames();
