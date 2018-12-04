@@ -19,7 +19,9 @@ public class MockWebApplication extends WebApplication {
 	@Override
 	protected void init() {
 		super.init();
-		mount(new JerseyRequestMapper("/api", new MockRestApplication()));
+		MockRestApplication restApp = new MockRestApplication();
+		mount(new JerseyRequestMapper(restApp));
+		mount(new JerseyRequestMapper("/overapi", restApp));
 	}
 
 }

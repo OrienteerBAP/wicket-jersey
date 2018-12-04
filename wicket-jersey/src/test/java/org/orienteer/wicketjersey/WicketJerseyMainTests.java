@@ -31,5 +31,7 @@ public class WicketJerseyMainTests {
     public void testEchoRest() {
     	String response = tester.executeGET("./api/wicket/testme");
     	assertTrue(response.contains("testme"));
+    	response = tester.executeGET("./overapi/wicket/testme2");
+    	assertTrue(response.contains("testme2"));
     }
 }

@@ -9,6 +9,7 @@ import java.util.concurrent.ScheduledThreadPoolExecutor;
 
 import javax.inject.Inject;
 import javax.inject.Provider;
+import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
 import javax.ws.rs.core.GenericType;
 
@@ -42,6 +43,14 @@ public class JerseyRequestMapper extends AbstractMapper implements Container{
 	
 	final Type requestTYPE = (new GenericType<Ref<Request>>() { }).getType();
 	final Type responseTYPE = (new GenericType<Ref<Response>>() { }).getType();
+	
+	public JerseyRequestMapper(Application app) {
+		this(app.getClass().getAnnotation(ApplicationPath.class), app);
+	}
+	
+	private JerseyRequestMapper(ApplicationPath path, Application app) {
+		this(path!=null?path.value():null, app);
+	}
 	
 	public JerseyRequestMapper(String mountPath, Application app) {
 		Args.notEmpty(mountPath, "mountPath");
