@@ -33,6 +33,8 @@ public class TestWicketJerseyMain {
     	assertTrue(response.contains("testme"));
     	response = tester.executeGET("./overapi/wicket/testme2");
     	assertTrue(response.contains("testme2"));
+    	response = tester.executeGET("./aspackage/wicket/testme3");
+    	assertTrue(response.contains("testme3"));
     }
     
     @Test

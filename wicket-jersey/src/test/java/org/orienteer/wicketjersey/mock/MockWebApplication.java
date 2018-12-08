@@ -23,6 +23,7 @@ public class MockWebApplication extends WebApplication {
 		MockRestApplication restApp = new MockRestApplication();
 		JerseyWicket.mount(restApp);
 		JerseyWicket.mount("/overapi", restApp);
+		JerseyWicket.mount("/aspackage", TestWicketResource.class.getPackage().getName());
 		mountPage("/overapi/justpage", HomePage.class);
 	}
 
