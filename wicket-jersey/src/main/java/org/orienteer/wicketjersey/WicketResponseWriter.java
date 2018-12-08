@@ -50,11 +50,11 @@ public class WicketResponseWriter implements ContainerResponseWriter {
 
         final int code = statusInfo.getStatusCode();
         
-        if(code == HttpServletResponse.SC_NOT_FOUND) {
+        /*if(code == HttpServletResponse.SC_NOT_FOUND) {
         	fallbackToDefaultWicketHandler();
         	return new NullOutputStream();
         }
-        else if(code / 100 == 2) {
+        else */if(code / 100 == 2) {
         	response.setStatus(code);
         } 
         else {
@@ -79,12 +79,12 @@ public class WicketResponseWriter implements ContainerResponseWriter {
         return response.getOutputStream();
 	}
 	
-	protected void fallbackToDefaultWicketHandler() {
+	/*protected void fallbackToDefaultWicketHandler() {
 		RequestCycle rc = RequestCycle.get();
 		rc.setMetaData(JerseyRequestMapper.AVOID_JERSEY_MAPPING, true);
 		IRequestHandler defaultHandler = WebApplication.get().getRootRequestMapper().mapRequest(rc.getRequest());
 		rc.replaceAllRequestHandlers(defaultHandler);
-	}
+	}*/
 
 	@Override
 	public boolean suspend(long timeOut, TimeUnit timeUnit, TimeoutHandler timeoutHandler) {
@@ -131,8 +131,8 @@ public class WicketResponseWriter implements ContainerResponseWriter {
 
 	@Override
 	public void failure(Throwable error) {
+//		if(error instanceof RequestHandlerExecutor.ReplaceHandlerException) rethrow(error);
 		try {
-			if(error instanceof RequestHandlerExecutor.ReplaceHandlerException) rethrow(error);
             if (!commited.get()) {
             	response.setStatus(javax.ws.rs.core.Response.Status.INTERNAL_SERVER_ERROR.getStatusCode());
             	response.getOutputStream().write(error.getMessage().getBytes());
