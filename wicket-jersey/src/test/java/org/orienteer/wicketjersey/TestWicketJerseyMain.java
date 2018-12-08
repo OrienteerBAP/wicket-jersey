@@ -10,9 +10,9 @@ import org.orienteer.wicketjersey.mock.MockWebApplication;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class WicketJerseyMainTests {
+public class TestWicketJerseyMain {
 	
-	private static final Logger LOG = LoggerFactory.getLogger(WicketJerseyMainTests.class);
+	private static final Logger LOG = LoggerFactory.getLogger(TestWicketJerseyMain.class);
 	
     private RestWicketTester tester;
 
