@@ -4,8 +4,13 @@ import org.apache.wicket.model.IDetachable;
 import org.apache.wicket.request.IRequestMapper;
 import org.apache.wicket.request.mapper.CompoundRequestMapper;
 
+/**
+ * {@link CompoundRequestMapper} for {@link JerseyRequestMapper} which allow to support JAX-RS applications life-cycle 
+ */
 public class JerseyCompoundRequestMapper  extends CompoundRequestMapper implements IDetachable {
 	
+	private static final long serialVersionUID = 1L;
+
 	@Override
 	public CompoundRequestMapper add(IRequestMapper mapper) {
 		super.add(mapper);

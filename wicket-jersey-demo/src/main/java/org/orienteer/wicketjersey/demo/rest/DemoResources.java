@@ -11,21 +11,22 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 
+
+/**
+ * JAX-RS Resources to demo this library 
+ */
 @Path("")
 public class DemoResources {
 	
 	@GET
 	@Path("threads")
-//	@Produces("text/plain")
 	@Produces("application/json")
 	public List<String> listThreads() {
-//		return Thread.getAllStackTraces().keySet().stream().map(t->t.getName()).collect(Collectors.joining("\n"));
 		return Thread.getAllStackTraces().keySet().stream().map(t->t.getName()).collect(Collectors.toList());
 	}
 	
 	@GET
 	@Path("properties")
-//	@Produces("text/plain")
 	@Produces("application/json")
 	public Properties listProperties() {
 		return System.getProperties();

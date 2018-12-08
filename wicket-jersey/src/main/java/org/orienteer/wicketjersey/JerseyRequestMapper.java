@@ -1,9 +1,6 @@
 package org.orienteer.wicketjersey;
 
-import java.lang.reflect.Type;
 import java.util.Arrays;
-import java.util.List;
-import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 
@@ -16,6 +13,7 @@ import javax.ws.rs.core.GenericType;
 import org.apache.wicket.MetaDataKey;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.request.IRequestHandler;
+import org.apache.wicket.request.IRequestMapper;
 import org.apache.wicket.request.Request;
 import org.apache.wicket.request.Response;
 import org.apache.wicket.request.Url;
@@ -34,7 +32,9 @@ import org.glassfish.jersey.server.spi.Container;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
+/**
+ * {@link IRequestMapper} which plays role of {@link Container} for JAX-RS applications 
+ */
 public class JerseyRequestMapper extends AbstractMapper implements Container{
 	
 	public static final MetaDataKey<Boolean> AVOID_JERSEY_MAPPING = new MetaDataKey<Boolean>() {};

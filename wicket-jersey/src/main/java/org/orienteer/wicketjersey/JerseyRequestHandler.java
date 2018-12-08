@@ -5,6 +5,8 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.security.Principal;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Enumeration;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,12 +23,16 @@ import org.apache.wicket.request.IRequestCycle;
 import org.apache.wicket.request.IRequestHandler;
 import org.apache.wicket.request.http.WebRequest;
 import org.apache.wicket.request.http.WebResponse;
+import org.glassfish.jersey.internal.PropertiesDelegate;
 import org.glassfish.jersey.internal.util.collection.Ref;
 import org.glassfish.jersey.server.ApplicationHandler;
 import org.glassfish.jersey.server.ContainerRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * {@link IRequestHandler} which routes requests to Jersey 
+ */
 public class JerseyRequestHandler implements IRequestHandler {
 	
 	private static final Logger LOG = LoggerFactory.getLogger(JerseyRequestHandler.class);
@@ -70,7 +76,7 @@ public class JerseyRequestHandler implements IRequestHandler {
 //            LOG.info("base: "+baseUri+"  request: "+requestUri);
             final ContainerRequest requestContext = new ContainerRequest(baseUri,
                     requestUri, httpRequest.getMethod().toUpperCase(),
-                    getSecurityContext(request), new WicketRequestPropertiesDelegate(request));
+                    getSecurityContext(request), new WicketRequestPropertiesDelegate(httpRequest));
             requestContext.setEntityStream(httpRequest.getInputStream());
             Enumeration<String> headers = httpRequest.getHeaderNames();
             while(headers.hasMoreElements()) {
@@ -133,5 +139,35 @@ public class JerseyRequestHandler implements IRequestHandler {
             }
         };
     }
+	
+	private static class WicketRequestPropertiesDelegate  implements PropertiesDelegate {
+		
+		private final HttpServletRequest httpRequest;
+		
+		public WicketRequestPropertiesDelegate(HttpServletRequest httpRequest) {
+			this.httpRequest = httpRequest;
+		}
+
+		@Override
+		public Object getProperty(String name) {
+			return httpRequest.getAttribute(name);
+		}
+
+		@Override
+		public Collection<String> getPropertyNames() {
+			return Collections.list(httpRequest.getAttributeNames());
+		}
+
+		@Override
+		public void setProperty(String name, Object object) {
+			httpRequest.setAttribute(name, object);
+		}
+
+		@Override
+		public void removeProperty(String name) {
+			httpRequest.removeAttribute(name);
+		}
+
+	}
 
 }

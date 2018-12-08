@@ -4,7 +4,11 @@ import org.apache.wicket.Application;
 import org.apache.wicket.IInitializer;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.request.IRequestMapper;
+import org.apache.wicket.request.mapper.CompoundRequestMapper;
 
+/**
+ * Wicket {@link IInitializer} which binds custom {@link CompoundRequestMapper} for JAX-RS applications 
+ */
 public class RestInitializer implements IInitializer{
 
 	private JerseyCompoundRequestMapper mapper = new JerseyCompoundRequestMapper();
