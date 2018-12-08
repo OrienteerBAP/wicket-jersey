@@ -5,7 +5,7 @@ import javax.ws.rs.core.Application;
 
 import org.glassfish.jersey.server.ResourceConfig;
 
-@ApplicationPath("/api")
+@ApplicationPath("api")
 public class MockRestApplication extends ResourceConfig {
 	
 	public MockRestApplication() {

@@ -14,11 +14,14 @@ import javax.ws.rs.core.Application;
 import javax.ws.rs.core.GenericType;
 
 import org.apache.wicket.MetaDataKey;
+import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.request.IRequestHandler;
 import org.apache.wicket.request.Request;
 import org.apache.wicket.request.Response;
 import org.apache.wicket.request.Url;
 import org.apache.wicket.request.cycle.RequestCycle;
+import org.apache.wicket.request.http.WebRequest;
+import org.apache.wicket.request.http.WebResponse;
 import org.apache.wicket.request.mapper.AbstractMapper;
 import org.apache.wicket.util.lang.Args;
 import org.glassfish.jersey.internal.inject.AbstractBinder;
@@ -42,11 +45,6 @@ public class JerseyRequestMapper extends AbstractMapper implements Container{
 	
 	private volatile ApplicationHandler appHandler;
 	private volatile ScheduledExecutorService scheduler;
-	
-	
-	
-	final Type requestTYPE = (new GenericType<Ref<Request>>() { }).getType();
-	final Type responseTYPE = (new GenericType<Ref<Response>>() { }).getType();
 	
 	public JerseyRequestMapper(Application app) {
 		this(app.getClass().getAnnotation(ApplicationPath.class), app);
@@ -141,15 +139,17 @@ public class JerseyRequestMapper extends AbstractMapper implements Container{
 
         @Override
         protected void configure() {
-            bindFactory(WicketRequestReferencingFactory.class).to(Request.class)
-                    .proxy(false).in(RequestScoped.class);
-            bindFactory(ReferencingFactory.<Request>referenceFactory()).to(new GenericType<Ref<Request>>() {})
-                    .in(RequestScoped.class);
-
-            bindFactory(WicketResponseReferencingFactory.class).to(Response.class)
-                    .proxy(true).proxyForSameScope(false).in(RequestScoped.class);
-            bindFactory(ReferencingFactory.<Response>referenceFactory()).to(new GenericType<Ref<Response>>() {})
-                    .in(RequestScoped.class);
+        	 bindFactory(()->RequestCycle.get()).to((new GenericType<RequestCycle>() { }).getType()).in(RequestScoped.class);
+        	 bindFactory(()->RequestCycle.get().getRequest()).to((new GenericType<Request>() { }).getType()).in(RequestScoped.class);
+        	 bindFactory(()->RequestCycle.get().getRequest()).to((new GenericType<WebRequest>() { }).getType()).in(RequestScoped.class);
+        	 bindFactory(()->RequestCycle.get().getResponse()).to((new GenericType<Response>() { }).getType()).in(RequestScoped.class);
+        	 bindFactory(()->RequestCycle.get().getResponse()).to((new GenericType<WebResponse>() { }).getType()).in(RequestScoped.class);
+        	 bindFactory(()->org.apache.wicket.Application.get())
+        	 					.to((new GenericType<org.apache.wicket.Application>() { }).getType())
+        	 					.in(RequestScoped.class);
+        	 bindFactory(()->WebApplication.get())
+								.to((new GenericType<WebApplication>() { }).getType())
+								.in(RequestScoped.class);
         }
     }
 

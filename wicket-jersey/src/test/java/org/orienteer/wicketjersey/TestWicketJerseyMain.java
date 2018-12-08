@@ -36,6 +36,18 @@ public class TestWicketJerseyMain {
     }
     
     @Test
+    public void testInCycle() {
+    	String response = tester.executeGET("./api/wicket/cycle");
+    	assertTrue(response.contains("IN CYCLE"));
+    }
+    
+    @Test
+    public void testContext() {
+    	String response = tester.executeGET("./api/wicket/context");
+    	assertTrue(response.contains("true"));
+    }
+    
+    @Test
     public void testFallbackToWicket() {
     	tester.executeGET("./overapi/justpage");
     	tester.assertRenderedPage(HomePage.class);

@@ -54,7 +54,6 @@ public class JerseyRequestHandler implements IRequestHandler {
 		final WicketResponseWriter responseWriter = new WicketResponseWriter(response, mapper.getScheduler());
         try {
         	LOG.debug(JerseyRequestHandler.class.getSimpleName()+" started");
-        	LOG.info("Prefix: "+request.getPrefixToContextPath());
         	
         	Url root = Url.parse(request.getContextPath() + request.getFilterPath());
         	Url base = new Url(root);
@@ -67,7 +66,7 @@ public class JerseyRequestHandler implements IRequestHandler {
             
             URI requestUri = new URI(requestUrl.toString(StringMode.FULL));
             
-            LOG.info("base: "+baseUri+"  request: "+requestUri);
+//            LOG.info("base: "+baseUri+"  request: "+requestUri);
             final ContainerRequest requestContext = new ContainerRequest(baseUri,
                     requestUri, httpRequest.getMethod().toUpperCase(),
                     getSecurityContext(request), new WicketRequestPropertiesDelegate(request));
@@ -79,10 +78,12 @@ public class JerseyRequestHandler implements IRequestHandler {
             }
             requestContext.setWriter(responseWriter);
 
-            requestContext.setRequestScopedInitializer(injectionManager -> {
-                injectionManager.<Ref<Request>>getInstance(mapper.requestTYPE).set(request);
-                injectionManager.<Ref<Response>>getInstance(mapper.responseTYPE).set(response);
-            });
+            /*requestContext.setRequestScopedInitializer(injectionManager -> {
+                injectionManager.<Ref<Request>>getInstance(JerseyRequestMapper.requestTYPE).set(request);
+                injectionManager.<Ref<WebResponse>>getInstance(JerseyRequestMapper.responseTYPE).set(response);
+                injectionManager.<Ref<Request>>getInstance(JerseyRequestMapper.webRequestTYPE).set(request);
+                injectionManager.<Ref<WebResponse>>getInstance(JerseyRequestMapper.webResponseTYPE).set(response);
+            });*/
             mapper.getApplicationHandler().handle(requestContext);
         } catch (IOException | URISyntaxException e) {
 			throw new WicketRuntimeException("Can't handle JAX-RS request", e);
