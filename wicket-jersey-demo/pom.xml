@@ -27,6 +27,11 @@
 	<packaging>war</packaging>
 	<name>wicket-jersey-demo</name>
 	<dependencies>
+		<dependency>
+			<groupId>org.orienteer.wicket-jersey</groupId>
+			<artifactId>wicket-jersey</artifactId>
+			<version>${project.version}</version>
+		</dependency>
 		<!--  WICKET DEPENDENCIES -->
 		<dependency>
 			<groupId>org.apache.wicket</groupId>

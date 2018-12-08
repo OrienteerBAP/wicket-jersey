@@ -4,7 +4,7 @@ import org.apache.log4j.BasicConfigurator;
 import org.apache.wicket.Page;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.orienteer.wicketjersey.JerseyRequestMapper;
-import org.orienteer.wicketjersey.JerseyWicket;
+import org.orienteer.wicketjersey.WicketJersey;
 
 public class MockWebApplication extends WebApplication {
 	
@@ -21,9 +21,9 @@ public class MockWebApplication extends WebApplication {
 	protected void init() {
 		super.init();
 		MockRestApplication restApp = new MockRestApplication();
-		JerseyWicket.mount(restApp);
-		JerseyWicket.mount("/overapi", restApp);
-		JerseyWicket.mount("/aspackage", TestWicketResource.class.getPackage().getName());
+		WicketJersey.mount(restApp);
+		WicketJersey.mount("/overapi", restApp);
+		WicketJersey.mount("/aspackage", TestWicketResource.class.getPackage().getName());
 		mountPage("/overapi/justpage", HomePage.class);
 	}
 

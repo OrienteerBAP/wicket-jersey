@@ -4,9 +4,9 @@ import javax.ws.rs.core.Application;
 
 import org.glassfish.jersey.server.ResourceConfig;
 
-public class JerseyWicket {
-	private JerseyWicket() {
-		throw new IllegalStateException(JerseyWicket.class.getSimpleName()+" is utility class");
+public class WicketJersey {
+	private WicketJersey() {
+		throw new IllegalStateException(WicketJersey.class.getSimpleName()+" is utility class");
 	}
 	
 	public static void mount(Application app) {

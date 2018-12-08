@@ -132,6 +132,7 @@ public class WicketResponseWriter implements ContainerResponseWriter {
 	@Override
 	public void failure(Throwable error) {
 		try {
+			if(error instanceof RequestHandlerExecutor.ReplaceHandlerException) rethrow(error);
             if (!commited.get()) {
             	response.setStatus(javax.ws.rs.core.Response.Status.INTERNAL_SERVER_ERROR.getStatusCode());
             	response.getOutputStream().write(error.getMessage().getBytes());

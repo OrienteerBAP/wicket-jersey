@@ -57,6 +57,7 @@ public class JerseyRequestHandler implements IRequestHandler {
         	
         	Url root = Url.parse(request.getContextPath() + request.getFilterPath());
         	Url base = new Url(root);
+        	base.getSegments().add("");
         	base.getSegments().addAll(Arrays.asList(mapper.getMountSegments()));
         	base.getSegments().add("");
             URI baseUri = new URI(requestCycle.getUrlRenderer().renderFullUrl(base));

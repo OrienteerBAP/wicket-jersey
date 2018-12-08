@@ -71,7 +71,7 @@ public class JerseyRequestMapper extends AbstractMapper implements Container{
 
 	@Override
 	public IRequestHandler mapRequest(Request request) {
-		return new JerseyRequestHandler(this);
+		return getCompatibilityScore(request)>=0?new JerseyRequestHandler(this):null;
 	}
 
 	@Override
