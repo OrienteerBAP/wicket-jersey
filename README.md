@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/OrienteerBAP/wicket-jersey.svg?branch=master)](https://travis-ci.org/OrienteerBAP/wicket-jersey) [![Coverage Status](https://coveralls.io/repos/github/OrienteerBAP/wicket-jersey/badge.svg?branch=master)](https://coveralls.io/github/OrienteerBAP/wicket-jersey?branch=master)
+
 # wicket-jersey
 Adaptor for Apache Wicket to support JAX-RS through embedding Jersey
 
