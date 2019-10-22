@@ -1,5 +1,8 @@
 language: java
 
-after_success:
-  - mvn clean cobertura:cobertura coveralls:report
+jdk:
+  - openjdk8
+
+#after_success:
+#  - mvn clean cobertura:cobertura coveralls:report
 
