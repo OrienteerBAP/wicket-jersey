@@ -76,7 +76,8 @@ public class JerseyRequestMapper extends AbstractMapper implements Container{
 
 	@Override
 	public int getCompatibilityScore(Request request) {
-		Boolean avoidJersey = RequestCycle.get().getMetaData(AVOID_JERSEY_MAPPING);
+		RequestCycle requestCycle = RequestCycle.get();
+		Boolean avoidJersey = requestCycle!=null?requestCycle.getMetaData(AVOID_JERSEY_MAPPING):false;
 		return (avoidJersey==null || !avoidJersey) && urlStartsWith(request.getUrl(), mountSegments)?mountSegments.length:Integer.MIN_VALUE;
 	}
 

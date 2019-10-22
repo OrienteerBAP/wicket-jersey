@@ -31,4 +31,10 @@ public class WicketApplication extends WebApplication
 		super.init();
 		WicketJersey.mount("/rest", DemoResources.class.getPackage().getName());
 	}
+	
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		unmount("/rest");
+	}
 }
