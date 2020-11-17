@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.orienteer.wicket-jersey</groupId>
   <artifactId>wicket-jersey-parent</artifactId>
-  <version>1.0-SNAPSHOT</version>
+  <version>1.0</version>
   <packaging>pom</packaging>
   <name>wicket-jersey-parent</name>
   <description>Wicket library to provide XAB-RS support through Jersey</description>
@@ -13,7 +13,7 @@
 		<url>https://github.com/OrienteerBAP/wicket-jersey</url>
 		<connection>scm:git:ssh://github.com/OrienteerBAP/wicket-jersey.git</connection>
 		<developerConnection>scm:git:ssh://git@github.com/OrienteerBAP/wicket-jersey.git</developerConnection>
-		<tag>HEAD</tag>
+		<tag>v1.0</tag>
 	</scm>
 
 	<issueManagement>

@@ -21,7 +21,7 @@
 	<parent>
     <artifactId>wicket-jersey-parent</artifactId>
     <groupId>org.orienteer.wicket-jersey</groupId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0</version>
   </parent>
 	<artifactId>wicket-jersey-demo</artifactId>
 	<packaging>war</packaging>
