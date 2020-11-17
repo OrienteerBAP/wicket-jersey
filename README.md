@@ -11,7 +11,7 @@ Add to your `pom.xml` the following dependency
 <dependency>
 	<groupId>org.orienteer.wicket-jersey</groupId>
 	<artifactId>wicket-jersey</artifactId>
-	<version>1.0-SNAPSHOT</version>  <!-- Put required version-->
+	<version>REQUIRED VERSION</version>  <!-- Put required version-->
 </dependency>
 ```
 
