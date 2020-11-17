@@ -6,10 +6,7 @@ import org.orienteer.wicketjersey.WicketJersey;
 import org.orienteer.wicketjersey.demo.rest.DemoResources;
 
 /**
- * Application object for your web application.
- * If you want to run this application without deploying, run the Start class.
- * 
- * @see org.orienteer.wicketjersey.demo.Start#main(String[])
+ * Demo Web Application for WicketJersey
  */
 public class WicketApplication extends WebApplication
 {
