@@ -11,9 +11,9 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
 
 import javax.servlet.http.HttpServletResponse;
-import javax.ws.rs.core.Application;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response.Status;
+import jakarta.ws.rs.core.Application;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response.Status;
 
 import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.request.IRequestHandler;
@@ -49,7 +49,7 @@ class WicketResponseWriter implements ContainerResponseWriter {
 	@Override
 	public OutputStream writeResponseStatusAndHeaders(long contentLength, ContainerResponse context)
 			throws ContainerException {
-        final javax.ws.rs.core.Response.StatusType statusInfo = context.getStatusInfo();
+        final jakarta.ws.rs.core.Response.StatusType statusInfo = context.getStatusInfo();
 
         final int code = statusInfo.getStatusCode();
         
@@ -125,7 +125,7 @@ class WicketResponseWriter implements ContainerResponseWriter {
 	public void failure(Throwable error) {
 		try {
             if (!commited.get()) {
-            	response.setStatus(javax.ws.rs.core.Response.Status.INTERNAL_SERVER_ERROR.getStatusCode());
+            	response.setStatus(jakarta.ws.rs.core.Response.Status.INTERNAL_SERVER_ERROR.getStatusCode());
             	response.getOutputStream().write(error.getMessage().getBytes());
             }
         } catch (IOException e) {
